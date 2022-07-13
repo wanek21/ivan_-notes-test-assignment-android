@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.notes.data.NoteDatabase
+import com.notes.utils.SingleLiveEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,7 +17,7 @@ class NoteListViewModel @Inject constructor(
     private val _notes = MutableLiveData<List<NoteListItem>?>()
     val notes: LiveData<List<NoteListItem>?> = _notes
 
-    private val _navigateToNoteCreation = MutableLiveData<Unit?>()
+    private val _navigateToNoteCreation = SingleLiveEvent<Unit?>()
     val navigateToNoteCreation: LiveData<Unit?> = _navigateToNoteCreation
 
     init {
@@ -34,7 +35,7 @@ class NoteListViewModel @Inject constructor(
     }
 
     fun onCreateNoteClick() {
-        _navigateToNoteCreation.postValue(Unit)
+        _navigateToNoteCreation.call()
     }
 
 }
